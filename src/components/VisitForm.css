@@ -1,0 +1,72 @@
+.visit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.visit-form h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-h);
+}
+
+.form-hint {
+  margin: -4px 0 4px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.visit-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text-h);
+}
+
+.visit-form input,
+.visit-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-h);
+}
+
+.visit-form input:focus,
+.visit-form select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.form-actions button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+}
+
+.form-actions button.secondary {
+  background: #fff;
+  color: var(--text-h);
+  border: 1px solid var(--border);
+}
+
+.form-actions button:hover {
+  filter: brightness(1.03);
+}

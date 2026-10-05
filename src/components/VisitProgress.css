@@ -1,0 +1,58 @@
+.visit-progress {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.visit-progress-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.visit-progress-label {
+  margin: 0 0 2px;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.visit-progress h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--text-h);
+}
+
+.visit-progress-total {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.visit-progress-track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+.visit-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .visit-progress {
+    padding: 16px;
+  }
+
+  .visit-progress h2 {
+    font-size: 1.6rem;
+  }
+}
