@@ -16,7 +16,17 @@ function App() {
   const [currentPage, setCurrentPage] = useState('calendar')
   const [members, setMembers] = useState(initialFamilyMembers)
   const [visits, setVisits] = useState(() => getSampleVisits(new Date()))
+  const [favoriteDoctorIds, setFavoriteDoctorIds] = useState([])
   const sentReminders = useRef(new Set())
+  const favoriteDoctors = sampleDoctors.filter((doctor) => favoriteDoctorIds.includes(doctor.id))
+
+  function handleToggleFavoriteDoctor(doctorId) {
+    setFavoriteDoctorIds((prev) =>
+      prev.includes(doctorId)
+        ? prev.filter((id) => id !== doctorId)
+        : [...prev, doctorId],
+    )
+  }
 
   function handleLogin(nextUser) {
     setUser(nextUser)
@@ -111,6 +121,8 @@ function App() {
     return (
       <DoctorCatalogPage
         doctors={sampleDoctors}
+        favoriteDoctorIds={favoriteDoctorIds}
+        onToggleFavorite={handleToggleFavoriteDoctor}
         onBack={() => setCurrentPage('calendar')}
       />
     )
@@ -120,6 +132,7 @@ function App() {
     <CalendarPage
       visits={visits}
       members={members}
+      favoriteDoctors={favoriteDoctors}
       userEmail={user.email}
       onLogout={handleLogout}
       onOpenDoctorCatalog={() => setCurrentPage('doctors')}
@@ -134,4 +147,3 @@ function App() {
 }
 
 export default App
-

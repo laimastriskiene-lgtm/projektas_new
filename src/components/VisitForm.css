@@ -44,6 +44,59 @@
   outline-offset: 1px;
 }
 
+.visit-form input,
+.visit-form select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+}
+
+.favorite-doctor-picker {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.favorite-doctor-picker legend {
+  margin-bottom: 6px;
+  color: var(--text-h);
+  font-size: 0.9rem;
+}
+
+.favorite-doctor-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.favorite-doctor-options button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.favorite-doctor-options button span {
+  color: var(--text);
+  font-size: 0.76rem;
+}
+
+.favorite-doctor-options button.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 .form-actions {
   display: flex;
   gap: 10px;

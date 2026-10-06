@@ -47,6 +47,7 @@ function memberName(members, memberId) {
 export default function CalendarPage({
   visits,
   members,
+  favoriteDoctors = [],
   userEmail,
   onLogout,
   onOpenDoctorCatalog,
@@ -302,6 +303,7 @@ export default function CalendarPage({
         {showForm ? (
           <VisitForm
             members={members}
+            favoriteDoctors={favoriteDoctors}
             initialDate={selectedDate || todayKey}
             onSubmit={handleCreate}
             onCancel={() => setShowForm(false)}

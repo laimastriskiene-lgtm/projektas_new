@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import './DoctorCatalogPage.css'
 
-export default function DoctorCatalogPage({ doctors, onBack }) {
+export default function DoctorCatalogPage({ doctors, favoriteDoctorIds = [], onToggleFavorite, onBack }) {
   const [search, setSearch] = useState('')
   const [specialtyFilter, setSpecialtyFilter] = useState('all')
   const [cityFilter, setCityFilter] = useState('all')
@@ -92,6 +92,14 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
               <p className="doctor-rating-source">
                 Pavyzdinis balas · Pincetas.lt: {doctor.pincetasRating}% rekomenduoja ({doctor.ratingCheckedAt})
               </p>
+              <button
+                type="button"
+                className={`doctor-favorite-btn ${favoriteDoctorIds.includes(doctor.id) ? 'is-favorite' : ''}`}
+                aria-pressed={favoriteDoctorIds.includes(doctor.id)}
+                onClick={() => onToggleFavorite?.(doctor.id)}
+              >
+                {favoriteDoctorIds.includes(doctor.id) ? '♥ Pašalinti iš mėgstamų' : '♡ Pridėti į mėgstamus'}
+              </button>
               <a href={doctor.pincetasProfileUrl} target="_blank" rel="noreferrer">
                 Peržiūrėti Pincetas.lt profilį ↗
               </a>

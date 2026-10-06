@@ -1,7 +1,7 @@
 ﻿import { useState } from 'react'
 import './VisitForm.css'
 
-export default function VisitForm({ members, initialDate = '', onSubmit, onCancel }) {
+export default function VisitForm({ members, favoriteDoctors = [], initialDate = '', onSubmit, onCancel }) {
   const [form, setForm] = useState({
     date: initialDate || '', time: '', memberId: members[0]?.id ?? '', doctor: '',
     reminderEnabled: false, reminderMinutes: '60',
@@ -24,7 +24,35 @@ export default function VisitForm({ members, initialDate = '', onSubmit, onCance
       <label htmlFor="visit-date">Data<input id="visit-date" type="date" value={form.date} onChange={(e) => update('date', e.target.value)} required /></label>
       <label htmlFor="visit-time">Laikas<input id="visit-time" type="time" value={form.time} onChange={(e) => update('time', e.target.value)} required /></label>
       <label htmlFor="visit-member">Šeimos narys<select id="visit-member" value={form.memberId} onChange={(e) => update('memberId', e.target.value)} required>{members.map((member) => <option key={member.id} value={member.id}>{member.name}</option>)}</select></label>
-      <label htmlFor="visit-doctor">Gydytojas arba specialybė<input id="visit-doctor" type="text" placeholder="pvz. Kardiologas" value={form.doctor} onChange={(e) => update('doctor', e.target.value)} required /></label>
+      {favoriteDoctors.length > 0 ? (
+        <fieldset className="favorite-doctor-picker">
+          <legend>Mėgstami gydytojai</legend>
+          <div className="favorite-doctor-options">
+            {favoriteDoctors.map((doctor) => (
+              <button
+                key={doctor.id}
+                type="button"
+                className={form.doctor === doctor.name ? 'selected' : ''}
+                aria-pressed={form.doctor === doctor.name}
+                onClick={() => update('doctor', doctor.name)}
+              >
+                {doctor.name}<span>{doctor.specialty}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      ) : null}
+      <label htmlFor="visit-doctor">
+        Gydytojas
+        <input
+          id="visit-doctor"
+          type="text"
+          placeholder="Pasirinkite mėgstamą arba įveskite vardą"
+          value={form.doctor}
+          onChange={(event) => update('doctor', event.target.value)}
+          required
+        />
+      </label>
       <label className="reminder-toggle" htmlFor="visit-reminder"><input id="visit-reminder" type="checkbox" checked={form.reminderEnabled} onChange={(e) => update('reminderEnabled', e.target.checked)} />Priminti apie vizitą</label>
       {form.reminderEnabled ? <label htmlFor="visit-reminder-time">Kada priminti<select id="visit-reminder-time" value={form.reminderMinutes} onChange={(e) => update('reminderMinutes', e.target.value)}><option value="10">Likus 10 minučių</option><option value="60">Likus 1 valandai</option><option value="1440">Likus 1 dienai</option><option value="10080">Likus 1 savaitei</option></select></label> : null}
       <div className="form-actions"><button type="button" className="secondary" onClick={onCancel}>Atšaukti</button><button type="submit">Išsaugoti</button></div>

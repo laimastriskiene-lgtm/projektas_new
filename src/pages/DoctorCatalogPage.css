@@ -159,6 +159,29 @@
   text-decoration: none;
 }
 
+.doctor-favorite-btn {
+  display: block;
+  margin: 0 0 12px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+.doctor-favorite-btn.is-favorite {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.doctor-favorite-btn:hover {
+  filter: brightness(0.98);
+}
+
 .doctor-card a:hover {
   text-decoration: underline;
 }
