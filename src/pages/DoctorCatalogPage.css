@@ -109,6 +109,12 @@
   color: var(--text);
 }
 
+.doctor-institution {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
 .doctor-city {
   flex-shrink: 0;
   padding: 4px 9px;

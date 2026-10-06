@@ -67,10 +67,10 @@ src/
 
 ## Gydytojų katalogas
 
-- `src/data/sampleDoctors.js` turi demonstracinius gydytojų įrašus: vardą, specialybę, miestą, Pincetas.lt rekomendacijų procentą, reitingo patikrinimo datą ir profilio nuorodą.
+- `src/data/sampleDoctors.js` turi demonstracinius gydytojų įrašus: vardą, specialybę, miestą, gydymo įstaigą, Pincetas.lt rekomendacijų procentą, reitingo patikrinimo datą ir profilio nuorodą. Pavyzdžiuose yra šeimos gydytojas, kardiologas, odontologas ir pediatras.
 - Reitingai yra patikrinimo dienos statinė momentinė kopija; jie gali keistis Pincetas.lt.
 - `App.jsx` valdo `currentPage` (`calendar` arba `doctors`) per React `useState`; navigacija nepakeičia vizitų ar šeimos narių būsenų.
-- `DoctorCatalogPage` rodo katalogo korteles, leidžia filtruoti pagal vardą, specialybę ir miestą, o Pincetas.lt nuorodos atidaromos naujame skirtuke.
+- `DoctorCatalogPage` rodo katalogo korteles, leidžia ieškoti pagal gydytojo vardą/pavardę arba gydymo įstaigą ir filtruoti pagal specialybę bei miestą; Pincetas.lt nuorodos atidaromos naujame skirtuke.
 - Puslapių ir komponentų failai laikomi tiesiai `src/pages/` ir `src/components/` aplankuose, pagal dabartinę projekto struktūrą.
 
 ## Vizualus rytojaus vizitų priminimas

@@ -18,7 +18,8 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
     const query = search.trim().toLocaleLowerCase('lt-LT')
 
     return doctors.filter((doctor) => {
-      const matchesSearch = !query || doctor.name.toLocaleLowerCase('lt-LT').includes(query)
+      const searchableText = `${doctor.name} ${doctor.institution}`.toLocaleLowerCase('lt-LT')
+      const matchesSearch = !query || searchableText.includes(query)
       const matchesSpecialty = specialtyFilter === 'all' || doctor.specialty === specialtyFilter
       const matchesCity = cityFilter === 'all' || doctor.city === cityFilter
       return matchesSearch && matchesSpecialty && matchesCity
@@ -42,11 +43,11 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
 
       <section className="doctor-catalog-filters" aria-label="Gydytojų filtrai">
         <label htmlFor="doctor-catalog-search">
-          Gydytojo vardas
+          Gydytojas arba įstaiga
           <input
             id="doctor-catalog-search"
             type="search"
-            placeholder="Ieškoti gydytojo..."
+            placeholder="Ieškoti gydytojo ar įstaigos..."
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
@@ -77,6 +78,7 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
                 <div>
                   <h2>{doctor.name}</h2>
                   <p className="doctor-specialty">{doctor.specialty}</p>
+                  <p className="doctor-institution">{doctor.institution}</p>
                 </div>
                 <span className="doctor-city">{doctor.city}</span>
               </div>
