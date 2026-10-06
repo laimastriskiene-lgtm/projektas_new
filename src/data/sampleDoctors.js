@@ -1,5 +1,5 @@
-// Pavyzdiniai Pincetas.lt duomenys; rekomendavimo rodikliai patikrinti 2026-10-06.
-// Pincetas.lt pateikia rekomendavimo procentą ir įvertinimų skaičių, o ne bendrą 5 balų vidurkį.
+// Statiniai katalogo pavyzdžiai. Pincetas.lt rekomendavimo rodikliai patikrinti 2026-10-06.
+// sampleRating yra tik demonstracinis 5 balų įvertinimas, ne Pincetas.lt bendras balas.
 export const sampleDoctors = [
   {
     id: 'doctor-justinas-bacevicius',
@@ -10,6 +10,7 @@ export const sampleDoctors = [
     address: 'Polocko g. 44',
     pincetasRating: 100,
     ratingCount: 50,
+    sampleRating: 4.8,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/22607/bacevicius-justinas',
   },
@@ -22,6 +23,7 @@ export const sampleDoctors = [
     address: '',
     pincetasRating: 91,
     ratingCount: 23,
+    sampleRating: 4.7,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/index.php/gydytojas/22881/cesna-sigitas',
   },
@@ -34,6 +36,7 @@ export const sampleDoctors = [
     address: '',
     pincetasRating: 85,
     ratingCount: 26,
+    sampleRating: 4.5,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/23021/alekniene-renata',
   },
@@ -46,6 +49,7 @@ export const sampleDoctors = [
     address: 'Baltų pr. 7A',
     pincetasRating: 75,
     ratingCount: 73,
+    sampleRating: 4.1,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/10041/jancauskas-algirdas',
   },
@@ -58,6 +62,7 @@ export const sampleDoctors = [
     address: 'Baltų pr. 7A',
     pincetasRating: 92,
     ratingCount: 12,
+    sampleRating: 4.6,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/32173/praskevicius-eimantas',
   },
@@ -70,6 +75,7 @@ export const sampleDoctors = [
     address: '',
     pincetasRating: 71,
     ratingCount: 65,
+    sampleRating: 4.3,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/21172/galinyte-emilija',
   },
@@ -82,6 +88,7 @@ export const sampleDoctors = [
     address: '',
     pincetasRating: 100,
     ratingCount: 26,
+    sampleRating: 4.8,
     ratingCheckedAt: '2026-10-06',
     pincetasProfileUrl: 'https://www.pincetas.lt/gydytojas/23504/simkus-henrikas',
   },

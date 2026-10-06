@@ -36,7 +36,7 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
           <p className="doctor-catalog-eyebrow">Šeimos vizitai</p>
           <h1>Gydytojų katalogas</h1>
           <p className="doctor-catalog-description">
-            Pavyzdiniai gydytojai, jų įstaigos, vietos ir Pincetas.lt įvertinimai.
+            Gydytojų ir klinikų pavyzdžiai. 5 balų įvertinimai yra demonstraciniai; Pincetas.lt profilyje rasite tikruosius duomenis.
           </p>
         </div>
       </header>
@@ -86,11 +86,11 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
                 <span className="doctor-city">{doctor.city}</span>
               </div>
               <p className="doctor-rating">
-                <strong>{doctor.pincetasRating}%</strong> rekomenduoja
+                <strong>{doctor.sampleRating.toFixed(1).replace('.', ',')} / 5</strong>
                 <span> · {doctor.ratingCount} įvertinimų</span>
               </p>
               <p className="doctor-rating-source">
-                Pincetas.lt duomenys, tikrinta {doctor.ratingCheckedAt}
+                Pavyzdinis balas · Pincetas.lt: {doctor.pincetasRating}% rekomenduoja ({doctor.ratingCheckedAt})
               </p>
               <a href={doctor.pincetasProfileUrl} target="_blank" rel="noreferrer">
                 Peržiūrėti Pincetas.lt profilį ↗

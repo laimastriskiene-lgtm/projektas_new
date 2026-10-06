@@ -67,10 +67,10 @@ src/
 
 ## Gydytojų katalogas
 
-- `src/data/sampleDoctors.js` turi demonstracinius gydytojų įrašus: vardą, specialybę, miestą, gydymo įstaigą, adresą (kai jis pateiktas), Pincetas.lt rekomendavimo procentą, įvertinimų skaičių, patikrinimo datą ir profilio nuorodą. Pavyzdžiuose yra šeimos gydytojai, kardiologai, odontologas ir pediatrai.
-- Pincetas.lt kortelėse rodomas rekomendavimo procentas ir įvertinimų skaičius. Tai nėra bendras 5 balų vidurkis; neišgalvoti tokio balo. Kai konkretaus adreso nėra duomenyse, rodyti tik miestą. Statiniai rodikliai patikrinti 2026-10-06 ir gali keistis.
+- `src/data/sampleDoctors.js` turi demonstracinius gydytojų įrašus: vardą, specialybę, miestą, gydymo įstaigą, adresą (kai jis pateiktas), Pincetas.lt rekomendavimo procentą, įvertinimų skaičių, patikrinimo datą, profilio nuorodą ir demonstracinį `sampleRating` iš 5. Pavyzdžiuose yra šeimos gydytojai, kardiologai, odontologas ir pediatrai.
+- Kortelėse rodomas `sampleRating` kaip pavyzdinis balas iš 5 ir Pincetas.lt įvertinimų skaičius. Pincetas.lt faktinis rodiklis rodomas atskirai kaip rekomendavimo procentas; jis nėra bendras 5 balų vidurkis. Pavyzdinių balų nelaikyti tikrais Pincetas.lt vertinimais. Kai konkretaus adreso nėra duomenyse, rodyti tik miestą. Statiniai Pincetas.lt rodikliai patikrinti 2026-10-06 ir gali keistis.
 - `App.jsx` valdo `currentPage` (`calendar` arba `doctors`) per React `useState`; navigacija nepakeičia vizitų ar šeimos narių būsenų.
-- `DoctorCatalogPage` rodo katalogo korteles su gydytojo vardu, specialybe, įstaiga, adresu / miestu, rekomendavimo procentu, įvertinimų skaičiumi ir tiesiogine Pincetas.lt profilio nuoroda. Paieška apima gydytojo vardą, įstaigą, miestą ir adresą; filtrai veikia pagal specialybę bei miestą. Pincetas.lt nuorodos atidaromos naujame skirtuke.
+- `DoctorCatalogPage` rodo katalogo korteles su gydytojo vardu, specialybe, įstaiga, adresu / miestu, demonstraciniu balu iš 5, įvertinimų skaičiumi ir tiesiogine Pincetas.lt profilio nuoroda. Pincetas.lt rekomendavimo procentas rodomas atskirai kaip faktinis šaltinio rodiklis. Paieška apima gydytojo vardą, įstaigą, miestą ir adresą; filtrai veikia pagal specialybę bei miestą. Pincetas.lt nuorodos atidaromos naujame skirtuke.
 - Puslapių ir komponentų failai laikomi tiesiai `src/pages/` ir `src/components/` aplankuose, pagal dabartinę projekto struktūrą.
 
 ## Vizualus rytojaus vizitų priminimas
