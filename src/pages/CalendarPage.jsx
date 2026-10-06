@@ -59,6 +59,10 @@ export default function CalendarPage({
   const [selectedDate, setSelectedDate] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [openVisitId, setOpenVisitId] = useState(null)
+  const [memberFilter, setMemberFilter] = useState('all')
+  const [doctorSearch, setDoctorSearch] = useState('')
+  const [dateFilter, setDateFilter] = useState('')
+  const [statusFilter, setStatusFilter] = useState('all')
 
   const visitsByDate = useMemo(() => {
     const map = new Map()
@@ -102,6 +106,20 @@ export default function CalendarPage({
     ? (visitsByDate.get(selectedDate) ?? [])
     : []
   const openVisit = visits.find((visit) => visit.id === openVisitId)
+  const filteredVisits = useMemo(() => {
+    const normalizedDoctor = doctorSearch.trim().toLocaleLowerCase('lt-LT')
+
+    return visits
+      .filter((visit) => {
+        const matchesMember = memberFilter === 'all' || visit.memberId === memberFilter
+        const matchesDoctor = !normalizedDoctor || visit.doctor.toLocaleLowerCase('lt-LT').includes(normalizedDoctor)
+        const matchesDate = !dateFilter || visit.date === dateFilter
+        const matchesStatus = statusFilter === 'all' || visit.status === statusFilter
+
+        return matchesMember && matchesDoctor && matchesDate && matchesStatus
+      })
+      .sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time))
+  }, [visits, memberFilter, doctorSearch, dateFilter, statusFilter])
 
   const todayKey = toKey(
     new Date().getFullYear(),
@@ -145,6 +163,60 @@ export default function CalendarPage({
     setCursor(new Date(year, month - 1, 1))
   }
 
+  function renderVisitCard(visit, showDate = false) {
+    return (
+      <li
+        key={visit.id}
+        className={`visit-card status-${visit.status}`}
+        onClick={visit.status === 'completed' ? () => setOpenVisitId(visit.id) : undefined}
+      >
+        <div className="visit-top">
+          <strong>
+            {showDate ? `${visit.date} · ` : ''}{visit.time} · {memberName(members, visit.memberId)}
+          </strong>
+          <span className={`badge ${visit.status}`}>
+            {visit.status === 'completed' ? 'Atliktas' : 'Suplanuotas'}
+          </span>
+        </div>
+        <p>Pas: {visit.doctor}</p>
+
+        <div className="visit-actions">
+          {visit.status === 'planned' ? (
+            <button
+              type="button"
+              className="action complete"
+              onClick={() => onCompleteVisit(visit.id)}
+            >
+              Pažymėti atliktu
+            </button>
+          ) : null}
+          {visit.status === 'completed' ? (
+            <button
+              type="button"
+              className="action complete"
+              onClick={(event) => {
+                event.stopPropagation()
+                setOpenVisitId(visit.id)
+              }}
+            >
+              Atidaryti
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="action danger"
+            onClick={(event) => {
+              event.stopPropagation()
+              handleDelete(visit.id)
+            }}
+          >
+            Ištrinti
+          </button>
+        </div>
+      </li>
+    )
+  }
+
   return (
     <div className="calendar-app">
       <header className="calendar-header">
@@ -161,6 +233,49 @@ export default function CalendarPage({
           </button>
         </div>
       </header>
+
+      <section className="visit-search-panel" aria-labelledby="visit-search-title">
+        <h2 id="visit-search-title">Vizitų paieška ir filtravimas</h2>
+        <div className="visit-search-controls">
+          <label htmlFor="visit-doctor-search">
+            Gydytojas
+            <input
+              id="visit-doctor-search"
+              type="search"
+              placeholder="Ieškoti gydytojo..."
+              value={doctorSearch}
+              onChange={(event) => setDoctorSearch(event.target.value)}
+            />
+          </label>
+          <label htmlFor="visit-member-filter">
+            Šeimos narys
+            <select id="visit-member-filter" value={memberFilter} onChange={(event) => setMemberFilter(event.target.value)}>
+              <option value="all">Visi</option>
+              {members.map((member) => <option key={member.id} value={member.id}>{member.name}</option>)}
+            </select>
+          </label>
+          <label htmlFor="visit-date-filter">
+            Data
+            <input id="visit-date-filter" type="date" value={dateFilter} onChange={(event) => setDateFilter(event.target.value)} />
+          </label>
+          <label htmlFor="visit-status-filter">
+            Būsena
+            <select id="visit-status-filter" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+              <option value="all">Visi</option>
+              <option value="planned">Suplanuotas</option>
+              <option value="completed">Atliktas</option>
+            </select>
+          </label>
+        </div>
+        <p className="visit-search-count" aria-live="polite">Rasta vizitų: {filteredVisits.length}</p>
+        {filteredVisits.length > 0 ? (
+          <ul className="visit-search-results">
+            {filteredVisits.map((visit) => renderVisitCard(visit, true))}
+          </ul>
+        ) : (
+          <p className="muted">Pagal pasirinktus filtrus vizitų nerasta.</p>
+        )}
+      </section>
 
       <section className="visit-list">
         <div className="visit-list-head">
@@ -199,57 +314,7 @@ export default function CalendarPage({
 
         {selectedVisits.length > 0 ? (
           <ul>
-            {selectedVisits.map((visit) => (
-              <li
-                key={visit.id}
-                className={`visit-card status-${visit.status}`}
-                onClick={visit.status === 'completed' ? () => setOpenVisitId(visit.id) : undefined}
-              >
-                <div className="visit-top">
-                  <strong>
-                    {visit.time} · {memberName(members, visit.memberId)}
-                  </strong>
-                  <span className={`badge ${visit.status}`}>
-                    {visit.status === 'completed' ? 'Atliktas' : 'Suplanuotas'}
-                  </span>
-                </div>
-                <p>Pas: {visit.doctor}</p>
-
-                <div className="visit-actions">
-                  {visit.status === 'planned' ? (
-                    <button
-                      type="button"
-                      className="action complete"
-                      onClick={() => onCompleteVisit(visit.id)}
-                    >
-                      Pažymėti atliktu
-                    </button>
-                  ) : null}
-                  {visit.status === 'completed' ? (
-                    <button
-                      type="button"
-                      className="action complete"
-                      onClick={(event) => {
-                        event.stopPropagation()
-                        setOpenVisitId(visit.id)
-                      }}
-                    >
-                      Atidaryti
-                    </button>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="action danger"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      handleDelete(visit.id)
-                    }}
-                  >
-                    Ištrinti
-                  </button>
-                </div>
-              </li>
-            ))}
+            {selectedVisits.map((visit) => renderVisitCard(visit))}
           </ul>
         ) : null}
       </section>

@@ -56,6 +56,20 @@ src/
 - Priminimai naudoja naršyklės Notification API, jei naudotojas suteikė leidimą.
 - Atsijungimas grąžina į prisijungimo puslapį.
 - Pradiniai šeimos nariai: Mama, Tėtis, Emilija. `src/data/sampleData.js` sukuria tris pavyzdinius einamojo mėnesio vizitus.
+- Kalendoriaus puslapyje yra vizitų paieškos ir filtravimo skiltis: šeimos narys, gydytojo vardas/pavardė, konkreti data ir būsena.
+
+## Vizitų paieška ir filtravimas
+
+`src/pages/CalendarPage.jsx` filtrų reikšmės valdomos React `useState`:
+
+- šeimos narys: „Visi“ arba pasirinktas esamas šeimos narys;
+- gydytojo paieška: laukas „Ieškoti gydytojo...“, ieško gydytojo tekste neatsižvelgiant į didžiąsias / mažąsias raides;
+- data: pasirenkama konkreti data;
+- būsena: „Visi“, „Suplanuotas“ arba „Atliktas“.
+
+Filtrai sudedami AND principu — rezultatas turi atitikti kiekvieną pasirinktą sąlygą. Kai filtrai tušti, rodomi visi vizitai. Rezultatai rikiuojami pagal datą ir laiką; skaitiklis rodo „Rasta vizitų: N“. Rezultatų kortelės išlaiko esamus veiksmus: suplanuotą galima pažymėti atliktu arba ištrinti, atliktą — atidaryti arba ištrinti.
+
+Filtrų stiliai yra `src/pages/CalendarPage.css` faile, atskiro CSS komponento ar naujos priklausomybės nėra.
 
 ## Atlikto vizito atidarymas ir redagavimas
 
@@ -113,7 +127,7 @@ Papildomos detalės senuose / pavyzdiniuose vizituose gali neegzistuoti; perži�
 - Nėra duomenų bazės ir tikro prisijungimo.
 - `package.json` skriptai: `npm run dev`, `npm run build`, `npm run lint`, `npm run preview`.
 - Šių pakeitimų metu `git diff --check` praėjo. Build ir testai nebuvo paleisti.
-- Projekte yra Git repozitorija. Tuo metu neužbaigti (necommitinti) pakeitimai: `src/App.jsx`, `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css` ir du nauji `CompletedVisitDialog` failai.
+- Projekte yra Git repozitorija. Pagal paskutinį patikrinimą necommitinti paieškos pakeitimai: `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css` ir šis `context.md` failas. Atlikto vizito peržiūros / redagavimo komponentas jau yra projekte.
 
 ## Galima tęsti
 
