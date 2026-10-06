@@ -31,6 +31,7 @@ src/
   main.jsx
   data/
     sampleData.js
+    sampleDoctors.js
   components/
     MembersPanel.jsx
     MembersPanel.css
@@ -45,6 +46,8 @@ src/
   pages/
     CalendarPage.jsx
     CalendarPage.css
+    DoctorCatalogPage.jsx
+    DoctorCatalogPage.css
     LoginPage.jsx
     LoginPage.css
 ```
@@ -60,6 +63,15 @@ src/
 - Pradiniai šeimos nariai: Mama, Tėtis, Emilija. `src/data/sampleData.js` sukuria tris pavyzdinius einamojo mėnesio vizitus.
 - Kalendoriaus puslapyje yra vizitų paieškos ir filtravimo skiltis: šeimos narys, gydytojo vardas/pavardė, konkreti data ir būsena.
 - Kalendoriaus viršuje rodoma vizuali rytojaus suplanuotų vizitų kortelė, kai tokių vizitų yra.
+- Kalendoriaus navigacijos mygtukas „Gydytojų katalogas“ atidaro gydytojų katalogo puslapį; katalogo viršuje esanti nuoroda grąžina į kalendorių.
+
+## Gydytojų katalogas
+
+- `src/data/sampleDoctors.js` turi demonstracinius gydytojų įrašus: vardą, specialybę, miestą, Pincetas.lt rekomendacijų procentą, reitingo patikrinimo datą ir profilio nuorodą.
+- Reitingai yra patikrinimo dienos statinė momentinė kopija; jie gali keistis Pincetas.lt.
+- `App.jsx` valdo `currentPage` (`calendar` arba `doctors`) per React `useState`; navigacija nepakeičia vizitų ar šeimos narių būsenų.
+- `DoctorCatalogPage` rodo katalogo korteles, leidžia filtruoti pagal vardą, specialybę ir miestą, o Pincetas.lt nuorodos atidaromos naujame skirtuke.
+- Puslapių ir komponentų failai laikomi tiesiai `src/pages/` ir `src/components/` aplankuose, pagal dabartinę projekto struktūrą.
 
 ## Vizualus rytojaus vizitų priminimas
 
@@ -136,7 +148,7 @@ Papildomos detalės senuose / pavyzdiniuose vizituose gali neegzistuoti; perži�
 - Nėra duomenų bazės ir tikro prisijungimo.
 - `package.json` skriptai: `npm run dev`, `npm run build`, `npm run lint`, `npm run preview`.
 - Vizitų paieškos pakeitimų metu `git diff --check` praėjo. Build ir testai po paskutinių funkcijų pakeitimų nebuvo paleisti.
-- Projekte yra Git repozitorija. Paieškos ir rytojaus priminimo pakeitimai yra `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css`, `src/components/VisitReminder.jsx`, `src/components/VisitReminder.css` ir šiame `context.md` faile; patikrink `git status`, jei reikia tikslaus commit statuso.
+- Projekte yra Git repozitorija. Paieškos, rytojaus priminimo ir gydytojų katalogo pakeitimus tikrink su `git status`. Katalogo failai: `src/data/sampleDoctors.js`, `src/pages/DoctorCatalogPage.jsx`, `src/pages/DoctorCatalogPage.css`, taip pat `src/App.jsx` ir `src/pages/CalendarPage.jsx` navigacijai.
 
 ## Galima tęsti
 
