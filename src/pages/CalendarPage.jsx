@@ -151,6 +151,79 @@ export default function CalendarPage({
         </div>
       </header>
 
+      <section className="visit-list">
+        <div className="visit-list-head">
+          <h2>
+            {selectedDate ? `Vizitai — ${selectedDate}` : 'Pasirinkite dieną'}
+          </h2>
+          {selectedDate ? (
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => setShowForm(true)}
+            >
+              + Šiai dienai
+            </button>
+          ) : null}
+        </div>
+
+        {showForm ? (
+          <VisitForm
+            members={members}
+            initialDate={selectedDate || todayKey}
+            onSubmit={handleCreate}
+            onCancel={() => setShowForm(false)}
+          />
+        ) : null}
+
+        {!selectedDate && !showForm ? (
+          <p className="muted">
+            Spustelėkite dieną kalendoriuje arba pridėkite naują vizitą.
+          </p>
+        ) : null}
+
+        {selectedDate && selectedVisits.length === 0 && !showForm ? (
+          <p className="muted">Šią dieną vizitų nėra.</p>
+        ) : null}
+
+        {selectedVisits.length > 0 ? (
+          <ul>
+            {selectedVisits.map((visit) => (
+              <li key={visit.id} className={`visit-card status-${visit.status}`}>
+                <div className="visit-top">
+                  <strong>
+                    {visit.time} · {memberName(members, visit.memberId)}
+                  </strong>
+                  <span className={`badge ${visit.status}`}>
+                    {visit.status === 'completed' ? 'Atliktas' : 'Suplanuotas'}
+                  </span>
+                </div>
+                <p>Pas: {visit.doctor}</p>
+
+                <div className="visit-actions">
+                  {visit.status === 'planned' ? (
+                    <button
+                      type="button"
+                      className="action complete"
+                      onClick={() => onCompleteVisit(visit.id)}
+                    >
+                      Pažymėti atliktu
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="action danger"
+                    onClick={() => handleDelete(visit.id)}
+                  >
+                    Ištrinti
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </section>
+
       <section className="calendar-panel">
         <div className="calendar-toolbar">
           <h1>
@@ -227,78 +300,6 @@ export default function CalendarPage({
   onDeleteMember={onDeleteMember}
 />
 
-<section className="visit-list">
-        <div className="visit-list-head">
-          <h2>
-            {selectedDate ? `Vizitai — ${selectedDate}` : 'Pasirinkite dieną'}
-          </h2>
-          {selectedDate ? (
-            <button
-              type="button"
-              className="link-btn"
-              onClick={() => setShowForm(true)}
-            >
-              + Šiai dienai
-            </button>
-          ) : null}
-        </div>
-
-        {showForm ? (
-          <VisitForm
-            members={members}
-            initialDate={selectedDate || todayKey}
-            onSubmit={handleCreate}
-            onCancel={() => setShowForm(false)}
-          />
-        ) : null}
-
-        {!selectedDate && !showForm ? (
-          <p className="muted">
-            Spustelėkite dieną kalendoriuje arba pridėkite naują vizitą.
-          </p>
-        ) : null}
-
-        {selectedDate && selectedVisits.length === 0 && !showForm ? (
-          <p className="muted">Šią dieną vizitų nėra.</p>
-        ) : null}
-
-        {selectedVisits.length > 0 ? (
-          <ul>
-            {selectedVisits.map((visit) => (
-              <li key={visit.id} className={`visit-card status-${visit.status}`}>
-                <div className="visit-top">
-                  <strong>
-                    {visit.time} · {memberName(members, visit.memberId)}
-                  </strong>
-                  <span className={`badge ${visit.status}`}>
-                    {visit.status === 'completed' ? 'Atliktas' : 'Suplanuotas'}
-                  </span>
-                </div>
-                <p>Pas: {visit.doctor}</p>
-
-                <div className="visit-actions">
-                  {visit.status === 'planned' ? (
-                    <button
-                      type="button"
-                      className="action complete"
-                      onClick={() => onCompleteVisit(visit.id)}
-                    >
-                      Pažymėti atliktu
-                    </button>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="action danger"
-                    onClick={() => handleDelete(visit.id)}
-                  >
-                    Ištrinti
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </section>
     </div>
   )
 }
