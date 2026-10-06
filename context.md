@@ -40,6 +40,8 @@ src/
     VisitProgress.css
     CompletedVisitDialog.jsx
     CompletedVisitDialog.css
+    VisitReminder.jsx
+    VisitReminder.css
   pages/
     CalendarPage.jsx
     CalendarPage.css
@@ -57,6 +59,13 @@ src/
 - Atsijungimas grąžina į prisijungimo puslapį.
 - Pradiniai šeimos nariai: Mama, Tėtis, Emilija. `src/data/sampleData.js` sukuria tris pavyzdinius einamojo mėnesio vizitus.
 - Kalendoriaus puslapyje yra vizitų paieškos ir filtravimo skiltis: šeimos narys, gydytojo vardas/pavardė, konkreti data ir būsena.
+- Kalendoriaus viršuje rodoma vizuali rytojaus suplanuotų vizitų kortelė, kai tokių vizitų yra.
+
+## Vizualus rytojaus vizitų priminimas
+
+`src/components/VisitReminder.jsx` gauna `visits` ir `members` per props. Pagal kompiuterio vietinę datą apskaičiuoja rytojų, atrenka tik `status === 'planned'` ir `date === rytojaus data` vizitus, tada surikiuoja juos pagal `time`. `time` nenaudojamas datos palyginimui. Kortelė paslepiama, kai rytojaus vizitų nėra; vienam vizitui rodo „Rytoj vizitas“, keliems — „Rytoj vizitai“. Kiekvienoje eilutėje rodomas šeimos narys, gydytojas ir laikas.
+
+Ši nauja kortelė yra tik programėlės viduje ir pati nenaudoja el. laiškų, SMS ar naršyklės pranešimų API. Anksčiau buvęs atskiras vizito priminimo nustatymas lieka nepakeistas.
 
 ## Vizitų paieška ir filtravimas
 
@@ -126,8 +135,8 @@ Papildomos detalės senuose / pavyzdiniuose vizituose gali neegzistuoti; perži�
 - Vizitai ir šeimos nariai saugomi tik programos veikimo metu React būsenoje. Perkrovus puslapį vėl užkraunami pradiniai duomenys.
 - Nėra duomenų bazės ir tikro prisijungimo.
 - `package.json` skriptai: `npm run dev`, `npm run build`, `npm run lint`, `npm run preview`.
-- Šių pakeitimų metu `git diff --check` praėjo. Build ir testai nebuvo paleisti.
-- Projekte yra Git repozitorija. Pagal paskutinį patikrinimą necommitinti paieškos pakeitimai: `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css` ir šis `context.md` failas. Atlikto vizito peržiūros / redagavimo komponentas jau yra projekte.
+- Vizitų paieškos pakeitimų metu `git diff --check` praėjo. Build ir testai po paskutinių funkcijų pakeitimų nebuvo paleisti.
+- Projekte yra Git repozitorija. Paieškos ir rytojaus priminimo pakeitimai yra `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css`, `src/components/VisitReminder.jsx`, `src/components/VisitReminder.css` ir šiame `context.md` faile; patikrink `git status`, jei reikia tikslaus commit statuso.
 
 ## Galima tęsti
 

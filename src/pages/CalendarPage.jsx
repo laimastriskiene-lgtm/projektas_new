@@ -3,6 +3,7 @@ import VisitForm from '../components/VisitForm'
 import MembersPanel from '../components/MembersPanel'
 import VisitProgress from '../components/VisitProgress'
 import CompletedVisitDialog from '../components/CompletedVisitDialog'
+import VisitReminder from '../components/VisitReminder'
 import './CalendarPage.css'
 const WEEKDAYS = ['Pr', 'An', 'Tr', 'Kt', 'Pn', 'Št', 'Sk']
 const MONTHS = [
@@ -126,7 +127,6 @@ export default function CalendarPage({
     new Date().getMonth(),
     new Date().getDate(),
   )
-
   function goPrev() {
     setCursor(new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1))
   }
@@ -233,6 +233,8 @@ export default function CalendarPage({
           </button>
         </div>
       </header>
+
+      <VisitReminder visits={visits} members={members} />
 
       <section className="visit-search-panel" aria-labelledby="visit-search-title">
         <h2 id="visit-search-title">Vizitų paieška ir filtravimas</h2>

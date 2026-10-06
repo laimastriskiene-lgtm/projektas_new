@@ -1,0 +1,54 @@
+.visit-reminder {
+  padding: 14px 18px;
+  border: 1px solid rgba(196, 149, 90, 0.45);
+  border-left: 4px solid var(--planned);
+  border-radius: 16px;
+  background: rgba(196, 149, 90, 0.12);
+}
+
+.visit-reminder-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.visit-reminder-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.visit-reminder-heading h2 {
+  margin: 0;
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.visit-reminder ul {
+  margin: 8px 0 0;
+  color: var(--text-h);
+}
+
+.visit-reminder ul.single-visit {
+  padding: 0;
+  list-style: none;
+}
+
+.visit-reminder ul.multiple-visits {
+  padding-left: 26px;
+}
+
+.visit-reminder li {
+  padding: 3px 0;
+}
+
+.visit-reminder li strong {
+  margin-right: 6px;
+}
+
+@media (max-width: 520px) {
+  .visit-reminder {
+    padding: 12px 14px;
+  }
+}
