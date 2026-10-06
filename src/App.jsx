@@ -5,15 +5,38 @@ import {
   getSampleVisits,
   initialFamilyMembers,
 } from './data/sampleData'
+import { sampleDoctors } from './data/sampleDoctors'
 import LoginPage from './pages/LoginPage'
 import CalendarPage from './pages/CalendarPage'
+import DoctorCatalogPage from './pages/DoctorCatalogPage'
 import './App.css'
 
 function App() {
   const [user, setUser] = useState(null)
+  const [currentPage, setCurrentPage] = useState('calendar')
   const [members, setMembers] = useState(initialFamilyMembers)
   const [visits, setVisits] = useState(() => getSampleVisits(new Date()))
+  const [favoriteDoctorIds, setFavoriteDoctorIds] = useState([])
   const sentReminders = useRef(new Set())
+  const favoriteDoctors = sampleDoctors.filter((doctor) => favoriteDoctorIds.includes(doctor.id))
+
+  function handleToggleFavoriteDoctor(doctorId) {
+    setFavoriteDoctorIds((prev) =>
+      prev.includes(doctorId)
+        ? prev.filter((id) => id !== doctorId)
+        : [...prev, doctorId],
+    )
+  }
+
+  function handleLogin(nextUser) {
+    setUser(nextUser)
+    setCurrentPage('calendar')
+  }
+
+  function handleLogout() {
+    setUser(null)
+    setCurrentPage('calendar')
+  }
 
   useEffect(() => {
     const checkReminders = () => {
@@ -91,15 +114,28 @@ function App() {
   }
 
   if (!user) {
-    return <LoginPage onLogin={setUser} visits={visits} />
+    return <LoginPage onLogin={handleLogin} visits={visits} />
+  }
+
+  if (currentPage === 'doctors') {
+    return (
+      <DoctorCatalogPage
+        doctors={sampleDoctors}
+        favoriteDoctorIds={favoriteDoctorIds}
+        onToggleFavorite={handleToggleFavoriteDoctor}
+        onBack={() => setCurrentPage('calendar')}
+      />
+    )
   }
 
   return (
     <CalendarPage
       visits={visits}
       members={members}
+      favoriteDoctors={favoriteDoctors}
       userEmail={user.email}
-      onLogout={() => setUser(null)}
+      onLogout={handleLogout}
+      onOpenDoctorCatalog={() => setCurrentPage('doctors')}
       onAddMember={handleAddMember}
       onDeleteMember={handleDeleteMember}
       onAddVisit={handleAddVisit}
@@ -111,5 +147,3 @@ function App() {
 }
 
 export default App
-
-

@@ -1,0 +1,205 @@
+.doctor-catalog-page {
+  min-height: 100svh;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--text);
+}
+
+.doctor-catalog-header {
+  display: grid;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.doctor-catalog-header > .ghost-btn {
+  justify-self: start;
+}
+
+.doctor-catalog-eyebrow {
+  margin: 0 0 4px;
+  color: var(--completed);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.doctor-catalog-header h1 {
+  margin: 0;
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: 1.8rem;
+}
+
+.doctor-catalog-description {
+  margin: 6px 0 0;
+  color: var(--text);
+}
+
+.doctor-catalog-filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.doctor-catalog-filters label {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-h);
+  font-size: 0.88rem;
+}
+
+.doctor-catalog-filters input,
+.doctor-catalog-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-h);
+  font: inherit;
+}
+
+.doctor-catalog-filters input:focus,
+.doctor-catalog-filters select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.doctor-catalog-count {
+  margin: 14px 0;
+  font-size: 0.9rem;
+}
+
+.doctor-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+
+.doctor-card {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.doctor-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.doctor-card h2 {
+  margin: 0;
+  color: var(--text-h);
+  font-size: 1.08rem;
+}
+
+.doctor-specialty {
+  margin: 4px 0 0;
+  color: var(--text);
+}
+
+.doctor-institution {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.doctor-address {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 0.82rem;
+}
+
+.doctor-city {
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.doctor-rating {
+  margin: 16px 0 2px;
+  color: var(--text-h);
+}
+
+.doctor-rating strong {
+  color: var(--completed);
+  font-size: 1.15rem;
+}
+
+.doctor-rating span {
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.doctor-rating-source {
+  margin: 0 0 14px;
+  color: var(--text);
+  font-size: 0.78rem;
+}
+
+.doctor-card a {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.doctor-favorite-btn {
+  display: block;
+  margin: 0 0 12px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+.doctor-favorite-btn.is-favorite {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.doctor-favorite-btn:hover {
+  filter: brightness(0.98);
+}
+
+.doctor-card a:hover {
+  text-decoration: underline;
+}
+
+.doctor-catalog-empty {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .doctor-catalog-page {
+    padding: 16px;
+  }
+
+  .doctor-catalog-filters {
+    grid-template-columns: 1fr;
+  }
+}

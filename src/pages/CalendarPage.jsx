@@ -47,8 +47,10 @@ function memberName(members, memberId) {
 export default function CalendarPage({
   visits,
   members,
+  favoriteDoctors = [],
   userEmail,
   onLogout,
+  onOpenDoctorCatalog,
   onAddMember,
   onDeleteMember,
   onAddVisit,
@@ -225,6 +227,9 @@ export default function CalendarPage({
           <p className="user-line">{userEmail}</p>
         </div>
         <div className="header-actions">
+          <button type="button" className="ghost-btn" onClick={onOpenDoctorCatalog}>
+            Gydytojų katalogas
+          </button>
           <button type="button" className="primary-btn" onClick={openAddForm}>
             + Pridėti vizitą
           </button>
@@ -298,6 +303,7 @@ export default function CalendarPage({
         {showForm ? (
           <VisitForm
             members={members}
+            favoriteDoctors={favoriteDoctors}
             initialDate={selectedDate || todayKey}
             onSubmit={handleCreate}
             onCancel={() => setShowForm(false)}
