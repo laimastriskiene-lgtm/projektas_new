@@ -18,7 +18,7 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
     const query = search.trim().toLocaleLowerCase('lt-LT')
 
     return doctors.filter((doctor) => {
-      const searchableText = `${doctor.name} ${doctor.institution}`.toLocaleLowerCase('lt-LT')
+      const searchableText = `${doctor.name} ${doctor.institution} ${doctor.city} ${doctor.address}`.toLocaleLowerCase('lt-LT')
       const matchesSearch = !query || searchableText.includes(query)
       const matchesSpecialty = specialtyFilter === 'all' || doctor.specialty === specialtyFilter
       const matchesCity = cityFilter === 'all' || doctor.city === cityFilter
@@ -36,7 +36,7 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
           <p className="doctor-catalog-eyebrow">Šeimos vizitai</p>
           <h1>Gydytojų katalogas</h1>
           <p className="doctor-catalog-description">
-            Pavyzdiniai gydytojai, jų specialybės, miestai ir Pincetas.lt reitingai.
+            Pavyzdiniai gydytojai, jų įstaigos, vietos ir Pincetas.lt įvertinimai.
           </p>
         </div>
       </header>
@@ -79,14 +79,18 @@ export default function DoctorCatalogPage({ doctors, onBack }) {
                   <h2>{doctor.name}</h2>
                   <p className="doctor-specialty">{doctor.specialty}</p>
                   <p className="doctor-institution">{doctor.institution}</p>
+                  <p className="doctor-address">
+                    {[doctor.address, doctor.city].filter(Boolean).join(', ')}
+                  </p>
                 </div>
                 <span className="doctor-city">{doctor.city}</span>
               </div>
               <p className="doctor-rating">
                 <strong>{doctor.pincetasRating}%</strong> rekomenduoja
+                <span> · {doctor.ratingCount} įvertinimų</span>
               </p>
               <p className="doctor-rating-source">
-                Pincetas.lt reitingas, tikrinta {doctor.ratingCheckedAt}
+                Pincetas.lt duomenys, tikrinta {doctor.ratingCheckedAt}
               </p>
               <a href={doctor.pincetasProfileUrl} target="_blank" rel="noreferrer">
                 Peržiūrėti Pincetas.lt profilį ↗

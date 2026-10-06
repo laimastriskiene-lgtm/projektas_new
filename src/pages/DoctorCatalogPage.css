@@ -115,6 +115,12 @@
   font-size: 0.88rem;
 }
 
+.doctor-address {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 0.82rem;
+}
+
 .doctor-city {
   flex-shrink: 0;
   padding: 4px 9px;
@@ -133,6 +139,11 @@
 .doctor-rating strong {
   color: var(--completed);
   font-size: 1.15rem;
+}
+
+.doctor-rating span {
+  color: var(--text);
+  font-size: 0.88rem;
 }
 
 .doctor-rating-source {
