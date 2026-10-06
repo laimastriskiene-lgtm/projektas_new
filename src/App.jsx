@@ -82,6 +82,14 @@ function App() {
     )
   }
 
+  function handleUpdateVisit(visitId, updates) {
+    setVisits((prev) =>
+      prev.map((visit) =>
+        visit.id === visitId ? { ...visit, ...updates } : visit,
+      ),
+    )
+  }
+
   if (!user) {
     return <LoginPage onLogin={setUser} visits={visits} />
   }
@@ -97,11 +105,11 @@ function App() {
       onAddVisit={handleAddVisit}
       onDeleteVisit={handleDeleteVisit}
       onCompleteVisit={handleCompleteVisit}
+      onUpdateVisit={handleUpdateVisit}
     />
   )
 }
 
 export default App
-
 
 

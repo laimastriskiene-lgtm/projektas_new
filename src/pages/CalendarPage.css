@@ -254,6 +254,7 @@
 
 .visit-card.status-completed {
   border-left-color: var(--completed);
+  cursor: pointer;
 }
 
 .visit-top {

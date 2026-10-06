@@ -1,0 +1,120 @@
+# Šeimos vizitai — projekto kontekstas
+
+Šis failas skirtas darbą tęsti kitame pokalbyje ar su kitu AI įrankiu. Prieš keičiant kodą perskaityk `AGENTS.md` ir šį failą. Jei aprašas nesutampa su kodu, pirmenybę teik dabartiniam kodui.
+
+Atnaujinta: 2026-10-06
+
+## Projekto paskirtis
+
+„Šeimos vizitai“ — React + Vite programėlė šeimos narių vizitams pas gydytojus planuoti ir sekti. Naudotojas gali pasirinkti dieną, įrašyti vizito laiką, šeimos narį ir gydytoją, o vėliau vizitą pažymėti atliktu ir papildyti jo informacija.
+
+Sąsajos kalba — lietuvių. Išlaikyk dabartinę šviesią pilkšvai žalsvą temą, žalsvai mėlyną akcentą, žalią atlikto vizito spalvą, šriftus ir apvalintų kortelių stilių.
+
+## Technologijos ir apribojimai
+
+- React 19, React DOM, Vite, JavaScript/JSX ir paprasti CSS failai.
+- Komponentai laikomi `src/`, jų stiliai — atskiruose `.css` failuose.
+- Nenaudoti TypeScript, Tailwind, CSS Modules ar naujų bibliotekų, nebent to aiškiai paprašyta.
+- Dabartinė duomenų būsena laikoma React `useState`. Nenaudoti backend, LocalStorage, Firebase ar Supabase, nebent to aiškiai paprašyta.
+- Prisijungimas yra vietaženklis; tikros autentifikacijos nėra.
+- Prieš redaguojant failą jį perskaityti. Saugoti esamas MVP funkcijas ir nekeisti nesusijusio kodo.
+
+## Faktinė projekto struktūra
+
+Komponentai laikomi tiesiogiai savo kataloguose; `CalendarPage/` ar `VisitForm/` poaplankių nėra.
+
+```text
+src/
+  App.jsx
+  App.css
+  index.css
+  main.jsx
+  data/
+    sampleData.js
+  components/
+    MembersPanel.jsx
+    MembersPanel.css
+    VisitForm.jsx
+    VisitForm.css
+    VisitProgress.jsx
+    VisitProgress.css
+    CompletedVisitDialog.jsx
+    CompletedVisitDialog.css
+  pages/
+    CalendarPage.jsx
+    CalendarPage.css
+    LoginPage.jsx
+    LoginPage.css
+```
+
+## Veikiantis pagrindinis srautas
+
+- Neprisijungus rodoma `LoginPage`; bet koks galiojantis el. pašto ir slaptažodžio įvedimas veikia kaip demonstracinis prisijungimas.
+- Prisijungus rodoma `CalendarPage` su mėnesio kalendoriumi, pasirinktos dienos vizitų skydeliu virš kalendoriaus, šeimos narių skiltimi ir veiksmų mygtukais.
+- Kalendoriuje suplanuoti (`planned`) ir atlikti (`completed`) vizitai žymimi skirtingų spalvų taškais.
+- Galima pridėti vizitą, pasirinkti šeimos narį, pažymėti vizitą atliktu, ištrinti vizitą su patvirtinimu, pridėti šeimos narį ir pašalinti narį, jei jis neturi vizitų.
+- Priminimai naudoja naršyklės Notification API, jei naudotojas suteikė leidimą.
+- Atsijungimas grąžina į prisijungimo puslapį.
+- Pradiniai šeimos nariai: Mama, Tėtis, Emilija. `src/data/sampleData.js` sukuria tris pavyzdinius einamojo mėnesio vizitus.
+
+## Atlikto vizito atidarymas ir redagavimas
+
+Įgyvendinta šiame pakeitimų rinkinyje:
+
+1. Atlikto vizito kortelę galima atidaryti paspaudus kortelę arba mygtuką „Atidaryti“.
+2. `CompletedVisitDialog` peržiūros režime rodo datą, laiką, šeimos narį, gydytoją, būseną „Atliktas“ bei papildomą informaciją.
+3. Mygtukas „Redaguoti / papildyti“ atveria formą, kurioje keičiami data, laikas, šeimos narys, gydytojas, vizito rezultatas, pastabos, gydytojo rekomendacijos, vaistai ir kito vizito data.
+4. „Išsaugoti“ perduoda tik redaguojamus laukus į `App.jsx`, kur jie įrašomi į `visits` React būseną.
+5. `status` redagavimo duomenyse neperduodamas ir todėl išlieka `completed`; redagavimas jo nekeičia į `planned`.
+6. „Atšaukti“ atstato formą iš esamų vizito duomenų ir nieko neįrašo į tėvinę React būseną.
+7. Jei pakeičiama vizito data, kalendorius perjungiamas į tą mėnesį ir parenkama nauja data.
+
+Susiję failai:
+
+- `src/App.jsx` — `handleUpdateVisit` atnaujina vizitą sujungdamas naujus laukus ankstesniu įrašu; nepakeisti laukai, įskaitant `status`, išsaugomi.
+- `src/pages/CalendarPage.jsx` — atlikto vizito atidarymas, dialogo būsena, išsaugojimo callback.
+- `src/pages/CalendarPage.css` — atlikto vizito kortelės paspaudimo žymeklis.
+- `src/components/CompletedVisitDialog.jsx` — peržiūros, redagavimo, išsaugojimo ir atšaukimo elgsena.
+- `src/components/CompletedVisitDialog.css` — dialogo stiliai, pritaikyti esamai temai ir siauriems ekranams.
+
+## Duomenų modelio santrauka
+
+Šeimos narys:
+
+```js
+{ id, name }
+```
+
+Vizitas:
+
+```js
+{
+  id,
+  date,       // YYYY-MM-DD
+  time,       // HH:mm
+  memberId,
+  doctor,
+  status,     // 'planned' | 'completed'
+  reminderEnabled,
+  reminderMinutes,
+  result,
+  notes,
+  recommendations,
+  medications,
+  nextVisit,  // YYYY-MM-DD arba tuščia reikšmė
+}
+```
+
+Papildomos detalės senuose / pavyzdiniuose vizituose gali neegzistuoti; peržiūros lange jos rodomos kaip „Neįrašyta“.
+
+## Saugojimas ir tikrinimas
+
+- Vizitai ir šeimos nariai saugomi tik programos veikimo metu React būsenoje. Perkrovus puslapį vėl užkraunami pradiniai duomenys.
+- Nėra duomenų bazės ir tikro prisijungimo.
+- `package.json` skriptai: `npm run dev`, `npm run build`, `npm run lint`, `npm run preview`.
+- Šių pakeitimų metu `git diff --check` praėjo. Build ir testai nebuvo paleisti.
+- Projekte yra Git repozitorija. Tuo metu neužbaigti (necommitinti) pakeitimai: `src/App.jsx`, `src/pages/CalendarPage.jsx`, `src/pages/CalendarPage.css` ir du nauji `CompletedVisitDialog` failai.
+
+## Galima tęsti
+
+Prieš naują funkciją peržiūrėk atitinkamus dabartinius failus, išsiaiškink ar panaši logika jau egzistuoja, tada keisk tik būtiną dalį. Pirmiau aptark ar pasiūlyk failų pakeitimų sąrašą, jei naudotojas to paprašo. Po pakeitimų trumpai nurodyk pakeistus failus ir ar buvo paleisti patikrinimai.

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import VisitForm from '../components/VisitForm'
 import MembersPanel from '../components/MembersPanel'
 import VisitProgress from '../components/VisitProgress'
+import CompletedVisitDialog from '../components/CompletedVisitDialog'
 import './CalendarPage.css'
 const WEEKDAYS = ['Pr', 'An', 'Tr', 'Kt', 'Pn', 'Št', 'Sk']
 const MONTHS = [
@@ -52,10 +53,12 @@ export default function CalendarPage({
   onAddVisit,
   onDeleteVisit,
   onCompleteVisit,
+  onUpdateVisit,
 }) {
   const [cursor, setCursor] = useState(() => startOfMonth(new Date()))
   const [selectedDate, setSelectedDate] = useState(null)
   const [showForm, setShowForm] = useState(false)
+  const [openVisitId, setOpenVisitId] = useState(null)
 
   const visitsByDate = useMemo(() => {
     const map = new Map()
@@ -98,6 +101,7 @@ export default function CalendarPage({
   const selectedVisits = selectedDate
     ? (visitsByDate.get(selectedDate) ?? [])
     : []
+  const openVisit = visits.find((visit) => visit.id === openVisitId)
 
   const todayKey = toKey(
     new Date().getFullYear(),
@@ -132,6 +136,13 @@ export default function CalendarPage({
   function handleDelete(visitId) {
     const ok = window.confirm('Ar tikrai ištrinti šį vizitą?')
     if (ok) onDeleteVisit(visitId)
+  }
+
+  function handleSaveCompletedVisit(visitId, updates) {
+    onUpdateVisit(visitId, updates)
+    setSelectedDate(updates.date)
+    const [year, month] = updates.date.split('-').map(Number)
+    setCursor(new Date(year, month - 1, 1))
   }
 
   return (
@@ -189,7 +200,11 @@ export default function CalendarPage({
         {selectedVisits.length > 0 ? (
           <ul>
             {selectedVisits.map((visit) => (
-              <li key={visit.id} className={`visit-card status-${visit.status}`}>
+              <li
+                key={visit.id}
+                className={`visit-card status-${visit.status}`}
+                onClick={visit.status === 'completed' ? () => setOpenVisitId(visit.id) : undefined}
+              >
                 <div className="visit-top">
                   <strong>
                     {visit.time} · {memberName(members, visit.memberId)}
@@ -210,10 +225,25 @@ export default function CalendarPage({
                       Pažymėti atliktu
                     </button>
                   ) : null}
+                  {visit.status === 'completed' ? (
+                    <button
+                      type="button"
+                      className="action complete"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        setOpenVisitId(visit.id)
+                      }}
+                    >
+                      Atidaryti
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     className="action danger"
-                    onClick={() => handleDelete(visit.id)}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      handleDelete(visit.id)
+                    }}
                   >
                     Ištrinti
                   </button>
@@ -299,6 +329,16 @@ export default function CalendarPage({
   onAddMember={onAddMember}
   onDeleteMember={onDeleteMember}
 />
+
+      {openVisit ? (
+        <CompletedVisitDialog
+          visit={openVisit}
+          memberName={memberName(members, openVisit.memberId)}
+          members={members}
+          onClose={() => setOpenVisitId(null)}
+          onSave={handleSaveCompletedVisit}
+        />
+      ) : null}
 
     </div>
   )
